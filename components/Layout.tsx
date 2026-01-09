@@ -3,6 +3,60 @@ import { NavLink as RouterNavLink, Outlet, useLocation } from 'react-router-dom'
 import { Menu, X, Instagram, Phone, MapPin, Mail, PartyPopper } from 'lucide-react';
 import { NAV_LINKS, PHONE_NUMBER, ADDRESS, INSTAGRAM_URL } from '../constants';
 
+const Logo: React.FC<{ isScrolled: boolean; isHome: boolean }> = ({ isScrolled, isHome }) => {
+  const [imgError, setImgError] = useState(false);
+
+  if (imgError) {
+    return (
+      <div className="flex flex-col items-center leading-none">
+        <span className={`font-serif text-2xl font-bold ${isScrolled || !isHome ? 'text-stone-900' : 'text-white'}`}>
+          Yathraa
+        </span>
+        <span className="text-[0.6rem] tracking-widest font-sans font-black uppercase text-gold-400">
+          Events
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <img 
+      src="/logo.png" 
+      alt="Yathraa Events" 
+      className="h-16 md:h-20 w-auto object-contain rounded-full bg-white shadow-sm hover:scale-105 transition-transform duration-300"
+      onError={() => setImgError(true)}
+    />
+  );
+};
+
+const FooterLogo: React.FC = () => {
+  const [imgError, setImgError] = useState(false);
+
+  if (imgError) {
+    return (
+      <div className="flex flex-col items-start leading-none">
+        <span className="font-serif text-2xl text-white font-bold tracking-wide">Yathraa</span>
+        <span className="text-[0.6rem] tracking-[0.3em] font-sans font-black uppercase text-gold-400 mt-1">Events</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <img 
+        src="/logo.png" 
+        alt="Yathraa" 
+        className="h-12 w-12 rounded-full bg-white p-0.5 object-cover" 
+        onError={() => setImgError(true)}
+      />
+      <div className="flex flex-col items-start leading-none">
+        <span className="font-serif text-2xl text-white font-bold tracking-wide">Yathraa</span>
+        <span className="text-[0.6rem] tracking-[0.3em] font-sans font-black uppercase text-gold-400 mt-1">Events</span>
+      </div>
+    </div>
+  );
+};
+
 const Layout: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,40 +91,13 @@ const Layout: React.FC = () => {
       isActive ? 'text-gold-600 bg-gold-50 border-l-4 border-gold-400' : 'text-stone-700 hover:bg-stone-50'
     }`;
 
-  // Updated Logo component to use the image file
-  const Logo = () => (
-    <div className="flex flex-col items-center leading-none group cursor-pointer">
-       {/* 
-         INSTRUCTION: Place your logo image named 'logo.png' in the 'public' folder.
-         The class 'rounded-full' is added to match the circular design of the logo provided.
-       */}
-       <img 
-        src="/logo.png" 
-        alt="Yathraa Events" 
-        className="h-16 md:h-20 w-auto object-contain rounded-full shadow-sm hover:scale-105 transition-transform duration-300"
-        onError={(e) => {
-          // Fallback if image is missing (hides image, shows text)
-          e.currentTarget.style.display = 'none';
-          const sibling = e.currentTarget.nextElementSibling;
-          if (sibling) sibling.classList.remove('hidden');
-        }}
-       />
-       
-       {/* Fallback Text Logo (Hidden by default, appears if image fails to load) */}
-       <div className="hidden flex-col items-center mt-2">
-         <span className={`font-serif text-2xl font-bold ${isScrolled || pathname !== '/' ? 'text-stone-900' : 'text-white'}`}>Yathraa</span>
-         <span className="text-[0.6rem] tracking-widest font-sans font-black uppercase text-gold-400">Events</span>
-       </div>
-    </div>
-  );
-
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <nav className={navClasses}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
           <RouterNavLink to="/" className="hover:opacity-90 transition-opacity">
-            <Logo />
+            <Logo isScrolled={isScrolled} isHome={pathname === '/'} />
           </RouterNavLink>
 
           {/* Desktop Menu */}
@@ -155,14 +182,7 @@ const Layout: React.FC = () => {
             
             {/* Brand Info */}
             <div className="space-y-6">
-               {/* Footer Logo - Text based for clarity on dark background, or image if preferred */}
-               <div className="flex items-center gap-3">
-                 <img src="/logo.png" alt="Yathraa" className="h-12 w-12 rounded-full bg-white p-0.5 object-cover" />
-                 <div className="flex flex-col items-start leading-none">
-                  <span className="font-serif text-2xl text-white font-bold tracking-wide">Yathraa</span>
-                  <span className="text-[0.6rem] tracking-[0.3em] font-sans font-black uppercase text-gold-400 mt-1">Events</span>
-                </div>
-               </div>
+               <FooterLogo />
                
               <p className="text-stone-400 leading-relaxed max-w-sm">
                 Transforming every celebration with a creative touch. Based in Cheran Ma Nagar, Coimbatore, we bring your dream events to life with elegance and style.
