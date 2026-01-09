@@ -3,56 +3,26 @@ import { NavLink as RouterNavLink, Outlet, useLocation } from 'react-router-dom'
 import { Menu, X, Instagram, Phone, MapPin, Mail, PartyPopper } from 'lucide-react';
 import { NAV_LINKS, PHONE_NUMBER, ADDRESS, INSTAGRAM_URL } from '../constants';
 
-const Logo: React.FC<{ isScrolled: boolean; isHome: boolean }> = ({ isScrolled, isHome }) => {
-  const [imgError, setImgError] = useState(false);
-
-  if (imgError) {
-    return (
-      <div className="flex flex-col items-center leading-none">
-        <span className={`font-serif text-2xl font-bold ${isScrolled || !isHome ? 'text-stone-900' : 'text-white'}`}>
-          Yathraa
-        </span>
-        <span className="text-[0.6rem] tracking-widest font-sans font-black uppercase text-gold-400">
-          Events
-        </span>
-      </div>
-    );
-  }
-
+// Simplified Logo component - Strictly Image only
+const Logo: React.FC = () => {
   return (
     <img 
       src="/logo.png" 
       alt="Yathraa Events" 
-      className="h-16 md:h-20 w-auto object-contain rounded-full bg-white shadow-sm hover:scale-105 transition-transform duration-300"
-      onError={() => setImgError(true)}
+      className="h-16 md:h-20 w-auto object-contain rounded-full bg-white shadow-md hover:scale-105 transition-transform duration-300 p-1"
     />
   );
 };
 
+// Simplified Footer Logo - Strictly Image only
 const FooterLogo: React.FC = () => {
-  const [imgError, setImgError] = useState(false);
-
-  if (imgError) {
-    return (
-      <div className="flex flex-col items-start leading-none">
-        <span className="font-serif text-2xl text-white font-bold tracking-wide">Yathraa</span>
-        <span className="text-[0.6rem] tracking-[0.3em] font-sans font-black uppercase text-gold-400 mt-1">Events</span>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex items-center gap-3">
+    <div className="inline-block">
       <img 
         src="/logo.png" 
-        alt="Yathraa" 
-        className="h-12 w-12 rounded-full bg-white p-0.5 object-cover" 
-        onError={() => setImgError(true)}
+        alt="Yathraa Events" 
+        className="h-20 w-20 md:h-24 md:w-24 object-contain rounded-full bg-white p-1" 
       />
-      <div className="flex flex-col items-start leading-none">
-        <span className="font-serif text-2xl text-white font-bold tracking-wide">Yathraa</span>
-        <span className="text-[0.6rem] tracking-[0.3em] font-sans font-black uppercase text-gold-400 mt-1">Events</span>
-      </div>
     </div>
   );
 };
@@ -97,7 +67,7 @@ const Layout: React.FC = () => {
       <nav className={navClasses}>
         <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
           <RouterNavLink to="/" className="hover:opacity-90 transition-opacity">
-            <Logo isScrolled={isScrolled} isHome={pathname === '/'} />
+            <Logo />
           </RouterNavLink>
 
           {/* Desktop Menu */}
